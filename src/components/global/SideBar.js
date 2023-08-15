@@ -16,9 +16,12 @@ import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import Box from "@mui/material/Box";
 import { tokens } from "../../theme";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useTheme } from "@mui/material";
 import LoginOutlinedIcon from "@mui/icons-material/LoginOutlined";
+import { removeTokenTimestamp } from "../../utils/utils";
+import axios from "axios";
+import { useSetCurrentUser } from "../../context/UserContext";
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -35,10 +38,22 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
   );
 };
 const SideBar = () => {
+  const setCurrentUser = useSetCurrentUser();
+  const navigate = useNavigate();
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState("Dashboard");
+  const handleSignOut = async () => {
+    try {
+      await axios.post("/dj-rest-auth/logout/");
+      setCurrentUser(null);
+      removeTokenTimestamp();
+      navigate("/signin");
+    } catch (err) {
+      // console.log(err);
+    }
+  };
   return (
     <Box
       sx={{
@@ -95,19 +110,15 @@ const SideBar = () => {
           </SidebarContent>
           <SidebarFooter>
             <Item
-              title="Home"
+              title="Sign in"
               to={"/signin"}
               icon={<LoginOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
-            <Item
-              title="Home"
-              to={"/signup"}
-              icon={<LogoutOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
+            <MenuItem onClick={handleSignOut} icon={<LogoutOutlinedIcon />}>
+              Sign out
+            </MenuItem>
           </SidebarFooter>
         </Menu>
       </ProSidebar>
