@@ -21,7 +21,7 @@ import { useTheme } from "@mui/material";
 import LoginOutlinedIcon from "@mui/icons-material/LoginOutlined";
 import { removeTokenTimestamp } from "../../utils/utils";
 import axios from "axios";
-import { useSetCurrentUser } from "../../context/UserContext";
+import { useCurrentUser, useSetCurrentUser } from "../../context/UserContext";
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -39,6 +39,7 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
 };
 const SideBar = () => {
   const setCurrentUser = useSetCurrentUser();
+  const currentUser = useCurrentUser();
   const navigate = useNavigate();
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -109,16 +110,19 @@ const SideBar = () => {
             />
           </SidebarContent>
           <SidebarFooter>
-            <Item
-              title="Sign in"
-              to={"/signin"}
-              icon={<LoginOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <MenuItem onClick={handleSignOut} icon={<LogoutOutlinedIcon />}>
-              Sign out
-            </MenuItem>
+            {currentUser ? (
+              <MenuItem onClick={handleSignOut} icon={<LogoutOutlinedIcon />}>
+                Sign out
+              </MenuItem>
+            ) : (
+              <Item
+                title="Sign in"
+                to={"/signin"}
+                icon={<LoginOutlinedIcon />}
+                selected={selected}
+                setSelected={setSelected}
+              />
+            )}
           </SidebarFooter>
         </Menu>
       </ProSidebar>

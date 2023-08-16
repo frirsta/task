@@ -7,9 +7,12 @@ import InputAdornment from "@mui/material/InputAdornment";
 import FormControl from "@mui/material/FormControl";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import styles from "../../styles/Form.module.css";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { Alert, Button } from "@mui/material";
+import { Link, useNavigate } from "react-router-dom";
+import Alert from "@mui/material/Alert";
+import Button from "@mui/material/Button";
+import { Typography } from "@mui/material";
 const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
@@ -44,10 +47,11 @@ const Signup = () => {
 
   return (
     <Box>
-      <form onSubmit={handleSubmit}>
+      <form className={styles.Form} onSubmit={handleSubmit}>
         <FormControl sx={{ m: 1, width: "25ch" }} variant="outlined">
           <InputLabel htmlFor="username">Username</InputLabel>
           <OutlinedInput
+            autoComplete="username"
             value={username}
             onChange={handleChange}
             name="username"
@@ -62,10 +66,11 @@ const Signup = () => {
             {message}
           </Alert>
         ))}
- 
+
         <FormControl sx={{ m: 1, width: "25ch" }} variant="outlined">
           <InputLabel htmlFor="password1">Password</InputLabel>
           <OutlinedInput
+            autoComplete="new-password"
             onChange={handleChange}
             value={password1}
             name="password1"
@@ -94,6 +99,7 @@ const Signup = () => {
         <FormControl sx={{ m: 1, width: "25ch" }} variant="outlined">
           <InputLabel htmlFor="password2">Confirm Password</InputLabel>
           <OutlinedInput
+            autoComplete="new-password"
             onChange={handleChange}
             value={password2}
             name="password2"
@@ -123,6 +129,11 @@ const Signup = () => {
           Submit
         </Button>
       </form>
+      <Box>
+        <Typography>
+          <Link>Sign in</Link>
+        </Typography>
+      </Box>
     </Box>
   );
 };

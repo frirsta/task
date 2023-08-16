@@ -8,6 +8,8 @@ import Home from "./pages/Home";
 import Signup from "./pages/auth/Signup";
 import Signin from "./pages/auth/Signin";
 import { useCurrentUser } from "./context/UserContext";
+
+
 function App() {
   const currentUser = useCurrentUser();
   const [theme, colorMode] = useMode();
@@ -18,7 +20,8 @@ function App() {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <div className="app">
-          <SideBar isSideBar={isSideBar} />
+          {currentUser && (<SideBar isSideBar={isSideBar} />)}
+         
           <main className="content">
             <NavBar isSideBar={isSideBar} />
             <Routes>

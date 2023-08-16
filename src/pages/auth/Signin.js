@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { setTokenTimestamp } from "../../utils/utils";
+import { useSetCurrentUser } from "../../context/UserContext";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import OutlinedInput from "@mui/material/OutlinedInput";
@@ -10,9 +12,8 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import axios from "axios";
 import Button from "@mui/material/Button";
-import { setTokenTimestamp } from "../../utils/utils";
-import { useSetCurrentUser } from "../../context/UserContext";
-import { Alert } from "@mui/material";
+import Alert from "@mui/material/Alert";
+import styles from "../../styles/Form.module.css";
 
 const Signin = () => {
   const setCurrentUser = useSetCurrentUser();
@@ -55,10 +56,11 @@ const Signin = () => {
           {message}
         </Alert>
       ))}
-      <form onSubmit={handleSubmit}>
+      <form className={styles.Form} onSubmit={handleSubmit}>
         <FormControl sx={{ m: 1, width: "25ch" }} variant="outlined">
           <InputLabel htmlFor="username">Username</InputLabel>
           <OutlinedInput
+            autoComplete="username"
             onChange={handleChange}
             value={username}
             name="username"
@@ -75,6 +77,7 @@ const Signin = () => {
         <FormControl sx={{ m: 1, width: "25ch" }} variant="outlined">
           <InputLabel htmlFor="password">Password</InputLabel>
           <OutlinedInput
+            autoComplete="current-password"
             onChange={handleChange}
             value={password}
             name="password"
