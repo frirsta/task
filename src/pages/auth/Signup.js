@@ -46,7 +46,10 @@ const Signup = () => {
   };
 
   return (
-    <Box>
+    <Box sx={{ textAlign: "center", margin: "100px 0" }}>
+      <Typography sx={{ margin: "20px 0" }} variant="h2">
+        Sign up
+      </Typography>
       <form className={styles.Form} onSubmit={handleSubmit}>
         <FormControl sx={{ m: 1, width: "25ch" }} variant="outlined">
           <InputLabel htmlFor="username">Username</InputLabel>
@@ -131,7 +134,7 @@ const Signup = () => {
       </form>
       <Box>
         <Typography>
-          <Link>Sign in</Link>
+          Already have an account? <Link to={"/signup"}>Sign up</Link>
         </Typography>
       </Box>
     </Box>

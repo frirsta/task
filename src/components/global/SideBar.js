@@ -1,4 +1,10 @@
 import React, { useState } from "react";
+import axios from "axios";
+import { tokens } from "../../theme";
+import { Link, useNavigate } from "react-router-dom";
+import { useTheme } from "@mui/material";
+import { useCurrentUser, useSetCurrentUser } from "../../context/UserContext";
+import { removeTokenTimestamp } from "../../utils/utils";
 import {
   ProSidebar,
   Menu,
@@ -6,6 +12,7 @@ import {
   SidebarHeader,
   SidebarFooter,
   SidebarContent,
+  SubMenu,
 } from "react-pro-sidebar";
 import "react-pro-sidebar/dist/css/styles.css";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
@@ -14,14 +21,14 @@ import ArrowBackIosNewOutlinedIcon from "@mui/icons-material/ArrowBackIosNewOutl
 import ArrowForwardIosOutlinedIcon from "@mui/icons-material/ArrowForwardIosOutlined";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
-import Box from "@mui/material/Box";
-import { tokens } from "../../theme";
-import { Link, useNavigate } from "react-router-dom";
-import { useTheme } from "@mui/material";
+import ChecklistOutlinedIcon from "@mui/icons-material/ChecklistOutlined";
+import EventOutlinedIcon from "@mui/icons-material/EventOutlined";
+import TrendingUpOutlinedIcon from "@mui/icons-material/TrendingUpOutlined";
+import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import LoginOutlinedIcon from "@mui/icons-material/LoginOutlined";
-import { removeTokenTimestamp } from "../../utils/utils";
-import axios from "axios";
-import { useCurrentUser, useSetCurrentUser } from "../../context/UserContext";
+import AddTaskOutlinedIcon from "@mui/icons-material/AddTaskOutlined";
+import TaskAltOutlinedIcon from "@mui/icons-material/TaskAltOutlined";
+import Box from "@mui/material/Box";
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -60,6 +67,7 @@ const SideBar = () => {
       sx={{
         "& .pro-sidebar-inner": {
           background: `${colors.primary[400]} !important`,
+          opacity: 0.7,
         },
         "& .pro-icon-wrapper": {
           backgroundColor: "transparent !important",
@@ -75,8 +83,20 @@ const SideBar = () => {
         },
       }}
     >
-      <ProSidebar onToggle="true" collapsed={isCollapsed}>
-        <Menu iconShape="round">
+      <ProSidebar
+        style={{ height: "100%" }}
+        onToggle="true"
+        collapsed={isCollapsed}
+      >
+        <Menu
+          style={{
+            height: "100%",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
+          }}
+          iconShape="round"
+        >
           <SidebarHeader>
             <MenuItem
               onClick={() => setIsCollapsed(!isCollapsed)}
@@ -91,9 +111,11 @@ const SideBar = () => {
                 margin: "10px 0 20px 0",
                 color: colors.grey[100],
               }}
-            ></MenuItem>
+            >
+              <Typography variant="h3">MyTasks</Typography>
+            </MenuItem>
           </SidebarHeader>
-          <SidebarContent>
+          <SidebarContent style={{ height: "100%" }}>
             <Item
               title="Home"
               to={"/"}
@@ -108,12 +130,51 @@ const SideBar = () => {
               selected={selected}
               setSelected={setSelected}
             />
+            <SubMenu title="Components" icon={<ChecklistOutlinedIcon />}>
+              <Item
+                title="My Tasks"
+                to={"/mytasks"}
+                icon={<TaskAltOutlinedIcon />}
+                selected={selected}
+                setSelected={setSelected}
+              />
+              <Item
+                title="Add Tasks"
+                to={"/addtask"}
+                icon={<AddTaskOutlinedIcon />}
+                selected={selected}
+                setSelected={setSelected}
+              />
+            </SubMenu>
+            <Item
+              title="Calendar"
+              to={"/calendar"}
+              icon={<EventOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
+              title="Statistics"
+              to={"/statistics"}
+              icon={<TrendingUpOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
           </SidebarContent>
           <SidebarFooter>
             {currentUser ? (
-              <MenuItem onClick={handleSignOut} icon={<LogoutOutlinedIcon />}>
-                Sign out
-              </MenuItem>
+              <>
+                <Item
+                  title="Settings"
+                  to={"/settings"}
+                  icon={<SettingsOutlinedIcon />}
+                  selected={selected}
+                  setSelected={setSelected}
+                />
+                <MenuItem onClick={handleSignOut} icon={<LogoutOutlinedIcon />}>
+                  Sign out
+                </MenuItem>
+              </>
             ) : (
               <Item
                 title="Sign in"

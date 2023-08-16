@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { setTokenTimestamp } from "../../utils/utils";
 import { useSetCurrentUser } from "../../context/UserContext";
 import Box from "@mui/material/Box";
@@ -14,6 +14,7 @@ import axios from "axios";
 import Button from "@mui/material/Button";
 import Alert from "@mui/material/Alert";
 import styles from "../../styles/Form.module.css";
+import { Typography } from "@mui/material";
 
 const Signin = () => {
   const setCurrentUser = useSetCurrentUser();
@@ -50,12 +51,15 @@ const Signin = () => {
   };
 
   return (
-    <Box>
+    <Box sx={{ textAlign: "center", margin: "100px 0" }}>
       {errors.non_field_errors?.map((message, idx) => (
         <Alert key={idx} severity="error">
           {message}
         </Alert>
       ))}
+      <Typography sx={{ margin: "20px 0" }} variant="h2">
+        Sign in
+      </Typography>
       <form className={styles.Form} onSubmit={handleSubmit}>
         <FormControl sx={{ m: 1, width: "25ch" }} variant="outlined">
           <InputLabel htmlFor="username">Username</InputLabel>
@@ -103,10 +107,18 @@ const Signin = () => {
             {message}
           </Alert>
         ))}
-        <Button variant="contained" color="secondary" type="submit">
+        <Button
+          sx={{ margin: "10px 0" }}
+          variant="contained"
+          color="secondary"
+          type="submit"
+        >
           Submit
         </Button>
       </form>
+      <Typography>
+        Don't have an account? <Link to={"/signin"}>Sign in</Link>
+      </Typography>
     </Box>
   );
 };
