@@ -50,7 +50,7 @@ const SideBar = () => {
   const navigate = useNavigate();
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(true);
   const [selected, setSelected] = useState("Dashboard");
   const handleSignOut = async () => {
     try {
@@ -83,11 +83,7 @@ const SideBar = () => {
         },
       }}
     >
-      <ProSidebar
-        style={{ height: "100%" }}
-        onToggle="true"
-        collapsed={isCollapsed}
-      >
+      <ProSidebar onToggle="true" collapsed={isCollapsed}>
         <Menu
           style={{
             height: "100%",
@@ -115,7 +111,7 @@ const SideBar = () => {
               <Typography variant="h3">MyTasks</Typography>
             </MenuItem>
           </SidebarHeader>
-          <SidebarContent style={{ height: "100%" }}>
+          <SidebarContent>
             <Item
               title="Home"
               to={"/"}
@@ -130,7 +126,7 @@ const SideBar = () => {
               selected={selected}
               setSelected={setSelected}
             />
-            <SubMenu title="Components" icon={<ChecklistOutlinedIcon />}>
+            <SubMenu title="Tasks" icon={<ChecklistOutlinedIcon />}>
               <Item
                 title="My Tasks"
                 to={"/mytasks"}
@@ -161,6 +157,8 @@ const SideBar = () => {
               setSelected={setSelected}
             />
           </SidebarContent>
+        </Menu>
+        <Menu>
           <SidebarFooter>
             {currentUser ? (
               <>

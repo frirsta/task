@@ -1,0 +1,35 @@
+.Calendar {
+  margin: 20px;
+}
+.FullCalendarContainer {
+  flex: 1 1 100%;
+  margin-left: 15px;
+}
+@media only screen and (max-width: 600px) {
+  .FullCalendarContainer {
+    flex: unset;
+    margin-left: 0;
+  }
+  .Calendar {
+    margin: 0;
+    padding: 40px 10px;
+  }
+  .Events {
+    display: none;
+  }
+  .FullCalendar {
+    width: 50vw;
+  }
+}
+
+@media only screen and (min-width: 600px) {
+}
+
+@media only screen and (min-width: 768px) {
+}
+
+@media only screen and (min-width: 992px) {
+}
+
+@media only screen and (min-width: 1200px) {
+}
