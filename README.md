@@ -13,3 +13,9 @@ npm install fullcalendar
 <a href="https://www.freepik.com/free-ai-image/sky-high-adventure-soaring-mountain-landscape-generated-by-ai_41295846.htm#&position=11&from_view=collections">Image By vecstock</a>
 
 npm install jwt-decode
+npm install react-bootstrap bootstrap
+npm install formik yup
+
+npm install @mui/x-date-pickers
+npm install @mui/material @emotion/react @emotion/styled
+npm install @mui/x-date-pickers dayjs date-fns luxon moment

@@ -14,7 +14,7 @@ import axios from "axios";
 import Button from "@mui/material/Button";
 import Alert from "@mui/material/Alert";
 import styles from "../../styles/Form.module.css";
-import { Typography } from "@mui/material";
+import Typography from "@mui/material/Typography";
 
 const Signin = () => {
   const setCurrentUser = useSetCurrentUser();
