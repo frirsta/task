@@ -1,11 +1,8 @@
 import React, { useState } from "react";
 import Box from "@mui/material/Box";
-
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
-
 import FormControl from "@mui/material/FormControl";
-
 import axios from "axios";
 import Button from "@mui/material/Button";
 import Alert from "@mui/material/Alert";
@@ -13,11 +10,13 @@ import styles from "../../styles/Form.module.css";
 import Typography from "@mui/material/Typography";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-
-import { DateCalendar } from '@mui/x-date-pickers';
-
-
+import { DateCalendar } from "@mui/x-date-pickers";
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormLabel from "@mui/material/FormLabel";
+import Form from "react-bootstrap/Form";
+import FormCheck from "react-bootstrap/FormCheck";
 const AddTask = () => {
   const [errors, setErrors] = useState({});
   const [taskData, setTaskData] = useState({
@@ -25,7 +24,6 @@ const AddTask = () => {
     description: "",
     due_date: "",
     priority: "medium",
-    status: "not_started",
     assigned_to: "",
   });
   const { title, description, due_date, priority, status, assigned_to } =
@@ -45,7 +43,7 @@ const AddTask = () => {
     }
   };
   return (
-    <Box sx={{ textAlign: "center", margin: "100px 0" }}>
+    <Box sx={{ textAlign: "center" }}>
       {errors.non_field_errors?.map((message, idx) => (
         <Alert key={idx} severity="error">
           {message}
@@ -54,7 +52,7 @@ const AddTask = () => {
       <Typography sx={{ margin: "20px 0" }} variant="h2">
         Add Task
       </Typography>
-      <form className={styles.Form} onSubmit={handleSubmit}>
+      <Form className={styles.Form} onSubmit={handleSubmit}>
         <FormControl sx={{ m: 1, width: "25ch" }} variant="outlined">
           <InputLabel htmlFor="title">Title</InputLabel>
           <OutlinedInput
@@ -111,58 +109,40 @@ const AddTask = () => {
             {message}
           </Alert>
         ))}
-        <FormControl sx={{ m: 1, width: "25ch" }} variant="outlined">
-          <InputLabel htmlFor="title">Title</InputLabel>
-          <OutlinedInput
-            autoComplete="title"
-            onChange={handleChange}
-            value={title}
-            name="title"
-            id="title"
-            type="text"
-            label="Title"
-          />
-        </FormControl>
-        {errors.title?.map((message, idx) => (
-          <Alert key={idx} severity="warning">
-            {message}
-          </Alert>
-        ))}
-        <FormControl sx={{ m: 1, width: "25ch" }} variant="outlined">
-          <InputLabel htmlFor="title">Title</InputLabel>
-          <OutlinedInput
-            autoComplete="title"
-            onChange={handleChange}
-            value={title}
-            name="title"
-            id="title"
-            type="text"
-            label="Title"
-          />
-        </FormControl>
-        {errors.title?.map((message, idx) => (
-          <Alert key={idx} severity="warning">
-            {message}
-          </Alert>
-        ))}
-        <FormControl sx={{ m: 1, width: "25ch" }} variant="outlined">
-          <InputLabel htmlFor="title">Title</InputLabel>
-          <OutlinedInput
-            autoComplete="title"
-            onChange={handleChange}
-            value={title}
-            name="title"
-            id="title"
-            type="text"
-            label="Title"
-          />
-        </FormControl>
-        {errors.title?.map((message, idx) => (
-          <Alert key={idx} severity="warning">
-            {message}
-          </Alert>
-        ))}
 
+        <FormControl>
+          <FormLabel id="demo-row-radio-buttons-group-label">
+            Priority
+          </FormLabel>
+          <RadioGroup
+            row
+            aria-labelledby="demo-row-radio-buttons-group-label"
+            name="row-radio-buttons-group"
+          >
+            <FormCheck
+              type="radio"
+              value="high"
+              onChange={handleChange}
+              name="priority"
+              label="high"
+            />
+            <FormCheck
+              type="radio"
+              value="medium"
+              onChange={handleChange}
+              name="priority"
+              label="Medium"
+            />
+
+            <FormCheck
+              type="radio"
+              value="low"
+              onChange={handleChange}
+              name="priority"
+              label="Low"
+            />
+          </RadioGroup>
+        </FormControl>
         <Button
           sx={{ margin: "10px 0" }}
           variant="contained"
@@ -171,7 +151,7 @@ const AddTask = () => {
         >
           Submit
         </Button>
-      </form>
+      </Form>
     </Box>
   );
 };
