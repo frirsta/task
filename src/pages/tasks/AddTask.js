@@ -8,12 +8,12 @@ import Button from "@mui/material/Button";
 import Alert from "@mui/material/Alert";
 import styles from "../../styles/Form.module.css";
 import Typography from "@mui/material/Typography";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DateCalendar } from "@mui/x-date-pickers";
-import Radio from "@mui/material/Radio";
+
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import RadioGroup from "@mui/material/RadioGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
 import FormLabel from "@mui/material/FormLabel";
 import Form from "react-bootstrap/Form";
 import FormCheck from "react-bootstrap/FormCheck";
@@ -26,8 +26,7 @@ const AddTask = () => {
     priority: "medium",
     assigned_to: "",
   });
-  const { title, description, due_date, priority, status, assigned_to } =
-    taskData;
+  const { title, description, due_date, priority } = taskData;
   const handleChange = (event) => {
     setTaskData({
       ...taskData,
@@ -38,10 +37,12 @@ const AddTask = () => {
     event.preventDefault();
     try {
       const { data } = await axios.post("/task/", taskData);
+      setTaskData(data);
     } catch (err) {
       setErrors(err.response?.data);
     }
   };
+  console.log(taskData);
   return (
     <Box sx={{ textAlign: "center" }}>
       {errors.non_field_errors?.map((message, idx) => (
@@ -53,7 +54,7 @@ const AddTask = () => {
         Add Task
       </Typography>
       <Form className={styles.Form} onSubmit={handleSubmit}>
-        <FormControl sx={{ m: 1, width: "25ch" }} variant="outlined">
+        <FormControl sx={{ m: 1, width: "90%" }} variant="outlined">
           <InputLabel htmlFor="title">Title</InputLabel>
           <OutlinedInput
             autoComplete="title"
@@ -70,7 +71,7 @@ const AddTask = () => {
             {message}
           </Alert>
         ))}
-        <FormControl sx={{ m: 1, width: "25ch" }} variant="outlined">
+        <FormControl sx={{ m: 1, width: "90%" }} variant="outlined">
           <InputLabel htmlFor="description">Description</InputLabel>
           <OutlinedInput
             multiline
@@ -89,20 +90,14 @@ const AddTask = () => {
             {message}
           </Alert>
         ))}
-        <FormControl sx={{ m: 1, width: "25ch" }} variant="outlined">
-          <InputLabel htmlFor="due_date">due_date</InputLabel>
-          <OutlinedInput
-            autoComplete="due_date"
-            onChange={handleChange}
-            value={due_date}
-            name="due_date"
-            id="due_date"
-            type="text"
-            label="due_date"
-          />
+        <FormControl name="due_date">
+          <InputLabel htmlFor="due_date">Due date</InputLabel>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DateCalendar disablePast />
-          </LocalizationProvider>
+      <DemoContainer components={['DatePicker']}>
+        <DatePicker value={due_date} onChange={(newValue) => setTaskData(newValue)} />
+      </DemoContainer>
+    </LocalizationProvider>
+   
         </FormControl>
         {errors.title?.map((message, idx) => (
           <Alert key={idx} severity="warning">
@@ -110,43 +105,52 @@ const AddTask = () => {
           </Alert>
         ))}
 
-        <FormControl>
-          <FormLabel id="demo-row-radio-buttons-group-label">
+        <FormControl sx={{ width: "100%" }}>
+          <FormLabel id="priority">
             Priority
-          </FormLabel>
-          <RadioGroup
-            row
-            aria-labelledby="demo-row-radio-buttons-group-label"
-            name="row-radio-buttons-group"
-          >
-            <FormCheck
-              type="radio"
-              value="high"
-              onChange={handleChange}
+            <RadioGroup
+              sx={{
+                width: "100%",
+                justifyContent: "space-evenly",
+                padding: "20px",
+              }}
+              id="priority"
+              row
+              aria-labelledby="priority"
               name="priority"
-              label="high"
-            />
-            <FormCheck
-              type="radio"
-              value="medium"
-              onChange={handleChange}
-              name="priority"
-              label="Medium"
-            />
+            >
+              <FormCheck
+                value={priority}
+                type="radio"
+                onChange={handleChange}
+                name="priority"
+                label="High"
+                id="High"
+              />
+              <FormCheck
+                value={priority}
+                type="radio"
+                onChange={handleChange}
+                name="priority"
+                label="Medium"
+                id="Medium"
+              />
 
-            <FormCheck
-              type="radio"
-              value="low"
-              onChange={handleChange}
-              name="priority"
-              label="Low"
-            />
-          </RadioGroup>
+              <FormCheck
+                value={priority}
+                type="radio"
+                onChange={handleChange}
+                name="priority"
+                label="Low"
+                id="Low"
+              />
+            </RadioGroup>
+          </FormLabel>
         </FormControl>
         <Button
           sx={{ margin: "10px 0" }}
           variant="contained"
-          color="secondary"
+          color="primary"
           type="submit"
         >
           Submit

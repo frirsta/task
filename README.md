@@ -19,3 +19,12 @@ npm install formik yup
 npm install @mui/x-date-pickers
 npm install @mui/material @emotion/react @emotion/styled
 npm install @mui/x-date-pickers dayjs date-fns luxon moment
+npm install react-hook-form
+npm install @mui/x-data-grid
+npm install @mui/material @emotion/react @emotion/styled
+npm install @mui/x-date-pickers
+npm install dayjs
+npm install date-fns
+npm install luxon
+npm install moment
+npm install @mui/material @emotion/react @emotion/styled
